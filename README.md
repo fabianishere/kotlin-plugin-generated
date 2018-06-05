@@ -7,7 +7,7 @@ To use the plugin, just apply the plugin in your `build.gradle`:
 
 ```groovy
 plugins {
-    id 'nl.fabianm.kotlin.compiler.generated' version '1.0'
+    id 'nl.fabianm.kotlin.plugin.generated' version '1.0'
 }
 ```
 
