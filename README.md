@@ -25,9 +25,17 @@ To use the plugin, just apply the plugin in your `build.gradle`:
 
 ```groovy
 plugins {
-    id 'nl.fabianm.kotlin.plugin.generated' version '1.0'
+    id 'nl.fabianm.kotlin.plugin.generated' version '1.3.0'
 }
 ```
+
+Make sure you install the version that is compatible with the Kotlin
+version you are using:
+
+| **Kotlin** | **Plugin** |
+|:----------:|:----------:|
+|    1.2.*   |     1.0    |
+|    1.3.*   |    1.3.0   |
 
 You can optionally configure the plugin as shown below:
 

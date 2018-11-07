@@ -16,6 +16,8 @@
 
 rootProject.name = 'kotlin-plugin-generated'
 
+enableFeaturePreview('STABLE_PUBLISHING')
+
 include ':plugin-compiler'
 include ':plugin-compiler-tests'
 include ':plugin-gradle'

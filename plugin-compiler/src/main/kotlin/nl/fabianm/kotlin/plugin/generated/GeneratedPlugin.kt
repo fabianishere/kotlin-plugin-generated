@@ -20,6 +20,7 @@ import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.ANNOTATION
 import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.DEFAULT_ANNOTATION
 import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.VISIBLE
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
+import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.codegen.extensions.ClassBuilderInterceptorExtension
 import org.jetbrains.kotlin.com.intellij.mock.MockProject
@@ -74,6 +75,8 @@ class GeneratedComponentRegistrar : ComponentRegistrar {
             CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY,
             MessageCollector.NONE
         )
+
+        messageCollector.report(CompilerMessageSeverity.INFO, "Generated: Compiler plugin activated")
 
         ClassBuilderInterceptorExtension.registerExtensionAsFirst(
             project,
