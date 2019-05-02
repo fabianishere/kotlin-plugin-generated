@@ -16,6 +16,11 @@
 
 package nl.fabianm.kotlin.plugin.generated
 
+import com.intellij.mock.MockProject
+import com.intellij.openapi.extensions.Extensions
+import com.intellij.openapi.extensions.LoadingOrder
+import com.intellij.openapi.extensions.impl.ExtensionPointImpl
+import com.intellij.openapi.project.Project
 import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.ANNOTATION
 import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.DEFAULT_ANNOTATION
 import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.VISIBLE
@@ -23,11 +28,7 @@ import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.codegen.extensions.ClassBuilderInterceptorExtension
-import org.jetbrains.kotlin.com.intellij.mock.MockProject
-import org.jetbrains.kotlin.com.intellij.openapi.extensions.Extensions
-import org.jetbrains.kotlin.com.intellij.openapi.extensions.LoadingOrder
-import org.jetbrains.kotlin.com.intellij.openapi.extensions.impl.ExtensionPointImpl
-import org.jetbrains.kotlin.com.intellij.openapi.project.Project
+import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOptionProcessingException
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
@@ -58,10 +59,10 @@ class GeneratedCommandLineProcessor : CommandLineProcessor {
     override val pluginId = PLUGIN_ID
     override val pluginOptions = listOf(ANNOTATION_OPTION, VISIBLE_OPTION)
 
-    override fun processOption(option: CliOption, value: String, configuration: CompilerConfiguration) = when (option) {
+    override fun processOption(option: AbstractCliOption, value: String, configuration: CompilerConfiguration) = when (option) {
         ANNOTATION_OPTION -> configuration.put(ANNOTATION, FqName(value))
         VISIBLE_OPTION -> configuration.put(VISIBLE, value.toBoolean())
-        else -> throw CliOptionProcessingException("Unknown option: ${option.name}")
+        else -> throw CliOptionProcessingException("Unknown option: ${option.optionName}")
     }
 }
 

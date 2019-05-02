@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-rootProject.name = 'kotlin-plugin-generated'
+plugins {
+    kotlin("jvm") version "1.3.31" apply false
+    id("org.jlleitschuh.gradle.ktlint") version "7.4.0" apply false
+    id("com.github.johnrengelman.shadow") version "5.0.0" apply false
+}
 
-enableFeaturePreview('STABLE_PUBLISHING')
+allprojects {
+    group = "nl.fabianm.kotlin.plugin.generated"
+    version = "1.3.1"
 
-include ':plugin-compiler'
-include ':plugin-compiler-tests'
-include ':plugin-gradle'
+    extra["junitJupiterVersion"] = "5.4.2"
+    extra["junitPlatformVersion"] = "1.4.2"
+}

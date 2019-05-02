@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-allprojects {
-    group = 'nl.fabianm.kotlin.plugin.generated'
-    version = '1.3.0'
+rootProject.name = "kotlin-plugin-generated"
 
-    ext {
-        kotlin_version = '1.3.0'
-        junit_jupiter_version = '5.3.1'
-        junit_platform_version = '1.3.1'
-    }
-}
-
+include(":plugin-compiler")
+include(":plugin-compiler-tests")
+include(":plugin-gradle")

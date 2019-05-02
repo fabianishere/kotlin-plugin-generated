@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.3.0"
-    id "org.jlleitschuh.gradle.ktlint" version "6.2.1"
+    kotlin("jvm")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("com.github.johnrengelman.shadow")
 }
 
 description = "A compiler plugin for Kotlin that marks Kotlin-generated code with an annotation."
@@ -26,34 +29,24 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compileOnly "org.jetbrains.kotlin:kotlin-compiler-embeddable"
-
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version"
-    testRuntimeOnly "org.junit.platform:junit-platform-launcher:$junit_platform_version"
+    compile(kotlin("stdlib"))
+    compileOnly(kotlin("compiler"))
 }
 
-compileKotlin {
+/* Compilation */
+tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
 
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+tasks.shadowJar {
+    configurations = listOf()
+    archiveClassifier.set("embeddable")
+    relocate("com.intellij", "org.jetbrains.kotlin.com.intellij")
 }
 
-test {
-    useJUnitPlatform {}
-
-    testLogging {
-        events 'passed', 'skipped', 'failed'
-    }
-
-    reports {
-        html.enabled = true
-    }
+// Create embeddable configuration
+configurations.create("embeddable") {
+    extendsFrom(configurations.shadow.get())
 }
