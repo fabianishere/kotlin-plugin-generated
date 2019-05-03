@@ -22,7 +22,7 @@ plugins {
 
 allprojects {
     group = "nl.fabianm.kotlin.plugin.generated"
-    version = "1.3.1"
+    version = "1.3.2"
 
     extra["junitJupiterVersion"] = "5.4.2"
     extra["junitPlatformVersion"] = "1.4.2"

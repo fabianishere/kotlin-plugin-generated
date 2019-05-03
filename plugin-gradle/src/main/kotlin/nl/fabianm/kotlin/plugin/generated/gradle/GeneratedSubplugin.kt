@@ -25,6 +25,10 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinGradleSubplugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 
+/**
+ * The project-level Gradle plugin behavior that is used specifying the plugin's configuration through the
+ * [GeneratedExtension] class.
+ */
 class GeneratedGradleSubplugin : Plugin<Project> {
     companion object {
         fun isEnabled(project: Project) = project.plugins.findPlugin(GeneratedGradleSubplugin::class.java) != null
@@ -39,11 +43,14 @@ class GeneratedGradleSubplugin : Plugin<Project> {
     }
 }
 
+/**
+ * The compilation-level Gradle plugin for applying the compiler plugin to the Kotlin compiler configuration.
+ */
 class GeneratedKotlinGradleSubplugin : KotlinGradleSubplugin<AbstractCompile> {
     companion object {
         private const val GENERATED_ARTIFACT_NAME = "plugin-gradle"
         private const val GENERATED_GROUP_ID = "nl.fabianm.kotlin.plugin.generated"
-        private const val GENERATED_VERSION = "1.3.0"
+        private const val GENERATED_VERSION = "1.3.2"
         private const val GENERATED_COMPILER_PLUGIN_ID = "nl.fabianm.kotlin.plugin.generated"
         private val ANNOTATION_ARG_NAME = "annotation"
         private val VISIBLE_ARG_NAME = "visible"
@@ -51,7 +58,14 @@ class GeneratedKotlinGradleSubplugin : KotlinGradleSubplugin<AbstractCompile> {
 
     override fun isApplicable(project: Project, task: AbstractCompile) = GeneratedGradleSubplugin.isEnabled(project)
 
-    override fun apply(project: Project, kotlinCompile: AbstractCompile, javaCompile: AbstractCompile?, variantData: Any?, androidProjectHandler: Any?, kotlinCompilation: KotlinCompilation<KotlinCommonOptions>?): List<SubpluginOption> {
+    override fun apply(
+        project: Project,
+        kotlinCompile: AbstractCompile,
+        javaCompile: AbstractCompile?,
+        variantData: Any?,
+        androidProjectHandler: Any?,
+        kotlinCompilation: KotlinCompilation<KotlinCommonOptions>?
+    ): List<SubpluginOption> {
         if (!GeneratedGradleSubplugin.isEnabled(project)) {
             return emptyList()
         }

@@ -22,7 +22,7 @@ To use the plugin, just apply the plugin in your `build.gradle`:
 
 ```groovy
 plugins {
-    id 'nl.fabianm.kotlin.plugin.generated' version '1.3.1'
+    id 'nl.fabianm.kotlin.plugin.generated' version '1.3.2'
 }
 ```
 
@@ -32,7 +32,7 @@ version you are using:
 | **Kotlin** | **Plugin** |
 |:----------:|:----------:|
 |    1.2.*   |     1.0    |
-|    1.3.*   |    1.3.1   |
+|    1.3.*   |    1.3.2   |
 
 You can optionally configure the plugin as shown below:
 
@@ -44,6 +44,19 @@ kotlinGenerated {
     // A flag to indicate whether the annotation should be visibile at runtime
     visible = true
 }
+```
+
+## IntelliJ
+To be able to use projects utilizing this plugin within IntelliJ IDEA, 
+you need to install the IntelliJ plugin (see [#4](https://github.com/fabianishere/kotlin-plugin-generated/issues/4) for more information). You can find the plugin on the
+[Releases](https://github.com/fabianishere/kotlin-plugin-generated/releases) page, labeled `plugin-idea-*.zip`
+
+## Command Line
+To use the plugin from the command line, invoke `kotlinc` using the
+following command line arguments:
+
+```bash
+kotlinc -Xplugin="<path-to-plugin-compiler.jar>" -P plugin:nl.fabianm.kotlin.plugin.generated:annotation="lombok.Generated" -P plugin:nl.fabianm.kotlin.plugin.generated:visible=true ...
 ```
 
 ## License

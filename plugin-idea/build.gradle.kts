@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Fabian Mastenbroek.
+ * Copyright 2019 Fabian Mastenbroek.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.github.johnrengelman.shadow")
+    id("org.jetbrains.intellij") version "0.4.8"
 }
 
-description = "A compiler plugin for Kotlin that marks Kotlin-generated code with an annotation."
+description = "IntelliJ IDEA plugin for marking Kotlin-generated code with an annotation."
 
 repositories {
     jcenter()
@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib"))
-    compileOnly(kotlin("compiler"))
+    compile(project(":plugin-compiler"))
 }
 
 /* Compilation */
@@ -44,18 +44,14 @@ tasks.jar {
     manifest {
         attributes["Specification-Title"] = project.name
         attributes["Specification-Version"] = project.version
-        attributes["Implementation-Title"] = "nl.fabianm.kotlin.plugin.generated.compiler"
+        attributes["Implementation-Title"] = "nl.fabianm.kotlin.plugin.generated.gradle"
         attributes["Implementation-Version"] = project.version
     }
 }
 
-tasks.shadowJar {
-    configurations = listOf()
-    archiveClassifier.set("embeddable")
-    relocate("com.intellij", "org.jetbrains.kotlin.com.intellij")
-}
-
-// Create embeddable configuration
-configurations.create("embeddable") {
-    extendsFrom(configurations.shadow.get())
+/* IntelliJ */
+intellij {
+    pluginName = "kotlin-plugin-generated"
+    version = "2019.1"
+    setPlugins("gradle", "org.jetbrains.kotlin:1.3.31-release-IJ2019.1-1")
 }

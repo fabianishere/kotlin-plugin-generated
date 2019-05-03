@@ -25,6 +25,8 @@ plugins {
     id("com.jfrog.bintray") version "1.8.4"
 }
 
+description = "Gradle plugin for marking Kotlin-generated code with an annotation."
+
 repositories {
     jcenter()
 }
@@ -46,6 +48,13 @@ tasks.withType<KotlinCompile> {
 tasks.jar {
     // Embed compiler plugin in jar
     from(zipTree(configurations.compileClasspath.get().first { it.name.startsWith("plugin-compiler") }))
+
+    manifest {
+        attributes["Specification-Title"] = project.name
+        attributes["Specification-Version"] = project.version
+        attributes["Implementation-Title"] = "nl.fabianm.kotlin.plugin.generated.gradle"
+        attributes["Implementation-Version"] = project.version
+    }
 }
 
 /* Gradle plugin */

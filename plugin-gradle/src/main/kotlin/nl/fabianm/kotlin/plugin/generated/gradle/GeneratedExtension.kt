@@ -16,14 +16,30 @@
 
 package nl.fabianm.kotlin.plugin.generated.gradle
 
+/**
+ * The available Gradle configuration for this plugin.
+ */
 open class GeneratedExtension {
+    /**
+     * The annotation to use for annotating generated methods.
+     */
     var annotation: String? = null
+
+    /**
+     * A flag to make the annotations visible during runtime.
+     */
     var visible: Boolean = false
 
+    /**
+     * Set the annotation to use for annotating generated methods.
+     */
     open fun annotation(fqName: String) {
         annotation = fqName
     }
 
+    /**
+     * Set the runtime visibility of the annotations.
+     */
     open fun visible(visible: Boolean) {
         this.visible = visible
     }

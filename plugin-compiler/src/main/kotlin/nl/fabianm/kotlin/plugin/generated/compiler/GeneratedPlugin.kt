@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Fabian Mastenbroek.
+ * Copyright 2019 Fabian Mastenbroek.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package nl.fabianm.kotlin.plugin.generated
+package nl.fabianm.kotlin.plugin.generated.compiler
 
 import com.intellij.mock.MockProject
 import com.intellij.openapi.extensions.Extensions
 import com.intellij.openapi.extensions.LoadingOrder
 import com.intellij.openapi.extensions.impl.ExtensionPointImpl
 import com.intellij.openapi.project.Project
-import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.ANNOTATION
-import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.DEFAULT_ANNOTATION
-import nl.fabianm.kotlin.plugin.generated.GeneratedConfigurationKeys.VISIBLE
+import nl.fabianm.kotlin.plugin.generated.compiler.GeneratedConfigurationKeys.ANNOTATION
+import nl.fabianm.kotlin.plugin.generated.compiler.GeneratedConfigurationKeys.DEFAULT_ANNOTATION
+import nl.fabianm.kotlin.plugin.generated.compiler.GeneratedConfigurationKeys.VISIBLE
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
@@ -39,15 +39,27 @@ import org.jetbrains.kotlin.extensions.ProjectExtensionDescriptor
 import org.jetbrains.kotlin.name.FqName
 
 object GeneratedConfigurationKeys {
+    /**
+     * The configuration key for specifying the qualified name of the annotation to annotate generated methods with.
+     */
     val ANNOTATION: CompilerConfigurationKey<FqName> =
         CompilerConfigurationKey.create("annotation qualified name")
 
+    /**
+     * The configuration key for specifying whether the annotations should be visible during runtime.
+     */
     val VISIBLE: CompilerConfigurationKey<Boolean> =
         CompilerConfigurationKey.create("annotation visibility")
 
+    /**
+     * By default, the plugin will annotate generated methods with the `lombok.Generated` annotation.
+     */
     val DEFAULT_ANNOTATION: FqName = FqName("lombok.Generated")
 }
 
+/**
+ * The [CommandLineProcessor] for this compiler plugin.
+ */
 class GeneratedCommandLineProcessor : CommandLineProcessor {
     companion object {
         val ANNOTATION_OPTION = CliOption("annotation", "<fqname>", "Annotation qualified name", required = false)
@@ -66,6 +78,9 @@ class GeneratedCommandLineProcessor : CommandLineProcessor {
     }
 }
 
+/**
+ * The [ComponentRegistrar] for this plugin, which registers the [GeneratedClassBuilderInterceptorExtension].
+ */
 class GeneratedComponentRegistrar : ComponentRegistrar {
     override fun registerProjectComponents(
         project: MockProject,
