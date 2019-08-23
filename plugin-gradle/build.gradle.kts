@@ -36,6 +36,8 @@ dependencies {
     compile(kotlin("stdlib"))
     compile(kotlin("gradle-plugin-api"))
     compileOnly(project(":plugin-compiler", configuration = "embeddable"))
+
+    runtimeOnly(kotlin("compiler-embeddable"))
 }
 
 /* Compilation */
