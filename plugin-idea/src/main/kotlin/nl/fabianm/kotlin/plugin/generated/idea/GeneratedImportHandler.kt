@@ -33,6 +33,11 @@ internal object GeneratedImportHandler {
         get() = PathManager.getJarPathForClass(GeneratedCommandLineProcessor::class.java)
 
     /**
+     * The implementation title to search for.
+     */
+    private val PLUGIN_IMPLEMENTATION_TITLE = "nl.fabianm.kotlin.plugin.generated"
+
+    /**
      * The [Logger] instance for this class.
      */
     private val logger = Logger.getInstance(GeneratedImportHandler::class.java)
@@ -49,7 +54,7 @@ internal object GeneratedImportHandler {
 
         val facetSettings = facet.configuration.settings
         val commonArguments = facetSettings.compilerArguments ?: CommonCompilerArguments.DummyImpl()
-        val regex = "(.*\\${File.separator}?$buildSystemPluginJar-.*\\.jar".toRegex()
+        val regex = ".*\\${File.separator}?$buildSystemPluginJar-.*\\.jar".toRegex()
 
         // Remove the incompatible compiler plugin from the classpath if found
         var isEnabled = false
@@ -82,7 +87,7 @@ internal object GeneratedImportHandler {
         return try {
             val jar = JarInputStream(FileInputStream(path))
             val manifest = jar.manifest
-            manifest.mainAttributes.getValue("Implementation-Title").startsWith("nl.fabianm.kotlin.plugin.generated")
+            manifest.mainAttributes.getValue("Implementation-Title").trim().equals(PLUGIN_IMPLEMENTATION_TITLE, ignoreCase = true)
         } catch (_: Exception) {
             false
         }
