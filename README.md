@@ -22,7 +22,7 @@ To use the plugin, just apply the plugin in your `build.gradle`:
 
 ```groovy
 plugins {
-    id 'nl.fabianm.kotlin.plugin.generated' version '1.3.2'
+    id 'nl.fabianm.kotlin.plugin.generated' version '1.3.3'
 }
 ```
 
@@ -31,8 +31,8 @@ version you are using:
 
 | **Kotlin** | **Plugin** |
 |:----------:|:----------:|
-|    1.2.*   |     1.0    |
-|    1.3.*   |    1.3.2   |
+|    1.2.*  |     1.0    |
+|    1.3.*  |    1.3.3   |
 
 You can optionally configure the plugin as shown below:
 

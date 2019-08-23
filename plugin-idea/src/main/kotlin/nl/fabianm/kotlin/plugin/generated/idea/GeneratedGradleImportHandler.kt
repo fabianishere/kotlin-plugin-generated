@@ -24,12 +24,19 @@ import org.jetbrains.plugins.gradle.model.data.GradleSourceSetData
 
 class GeneratedGradleImportHandler : GradleProjectImportHandler {
     override fun importBySourceSet(facet: KotlinFacet, sourceSetNode: DataNode<GradleSourceSetData>) {
-        GeneratedImportHandler.modifyCompilerArguments(facet, PLUGIN_GRADLE_JAR)
+        GeneratedImportHandler.modifyCompilerArguments(facet, PLUGIN_GRADLE_JAR, PLUGIN_GRADLE_TITLE)
     }
 
     override fun importByModule(facet: KotlinFacet, moduleNode: DataNode<ModuleData>) {
-        GeneratedImportHandler.modifyCompilerArguments(facet, PLUGIN_GRADLE_JAR)
+        GeneratedImportHandler.modifyCompilerArguments(facet, PLUGIN_GRADLE_JAR, PLUGIN_GRADLE_TITLE)
     }
 
-    private val PLUGIN_GRADLE_JAR = "plugin-gradle"
+    companion object {
+        private val PLUGIN_GRADLE_JAR = "plugin-gradle"
+
+        /**
+         * The implementation title to search for.
+         */
+        private val PLUGIN_GRADLE_TITLE = "nl.fabianm.kotlin.plugin.generated.gradle"
+    }
 }

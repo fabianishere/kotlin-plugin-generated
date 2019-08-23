@@ -33,11 +33,6 @@ internal object GeneratedImportHandler {
         get() = PathManager.getJarPathForClass(GeneratedCommandLineProcessor::class.java)
 
     /**
-     * The implementation title to search for.
-     */
-    private val PLUGIN_IMPLEMENTATION_TITLE = "nl.fabianm.kotlin.plugin.generated"
-
-    /**
      * The [Logger] instance for this class.
      */
     private val logger = Logger.getInstance(GeneratedImportHandler::class.java)
@@ -48,19 +43,20 @@ internal object GeneratedImportHandler {
      *
      * @param facet The facet to modify.
      * @param buildSystemPluginJar The name of the jar file to remove rom the classpath.
+     * @param implementationTitle The implementation title to validate.
      */
-    fun modifyCompilerArguments(facet: KotlinFacet, buildSystemPluginJar: String) {
+    fun modifyCompilerArguments(facet: KotlinFacet, buildSystemPluginJar: String, implementationTitle: String) {
         logger.info("Probing for Gradle plugin")
 
         val facetSettings = facet.configuration.settings
         val commonArguments = facetSettings.compilerArguments ?: CommonCompilerArguments.DummyImpl()
-        val regex = ".*\\${File.separator}?$buildSystemPluginJar-.*\\.jar".toRegex()
+        val regex = "(.*\\${File.separator})?$buildSystemPluginJar-.*\\.jar".toRegex()
 
         // Remove the incompatible compiler plugin from the classpath if found
         var isEnabled = false
         val oldPluginClasspaths = (commonArguments.pluginClasspaths ?: emptyArray()).filterTo(mutableListOf()) {
-            val match = regex.matches(it) && validateJar(it)
-            logger.debug("$it [$match]")
+            val match = regex.matches(it) && validateJar(it, implementationTitle)
+            logger.info("$it [match=$match]")
             if (match) {
                 isEnabled = true
             }
@@ -83,12 +79,12 @@ internal object GeneratedImportHandler {
      * We need to perform this rather ugly check, because the artifact id of the Gradle plugin is not unique and rather
      * general (`plugin-gradle`). We therefore check whether the manifest contains references to this project.
      */
-    private fun validateJar(path: String): Boolean {
+    private fun validateJar(path: String, implementationTitle: String): Boolean {
         return try {
             val jar = JarInputStream(FileInputStream(path))
             val manifest = jar.manifest
-            manifest.mainAttributes.getValue("Implementation-Title").trim().equals(PLUGIN_IMPLEMENTATION_TITLE, ignoreCase = true)
-        } catch (_: Exception) {
+            manifest.mainAttributes.getValue("Implementation-Title").trim().equals(implementationTitle, ignoreCase = true)
+        } catch (e: Exception) {
             false
         }
     }
