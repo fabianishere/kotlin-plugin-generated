@@ -109,5 +109,5 @@ fun <T> ProjectExtensionDescriptor<T>.registerExtensionAsFirst(project: Project,
     Extensions.getArea(project)
         .getExtensionPoint(extensionPointName)
         .let { it as ExtensionPointImpl }
-        .registerExtension(extension, LoadingOrder.LAST)
+        .registerExtension(extension, LoadingOrder.LAST) {}
 }

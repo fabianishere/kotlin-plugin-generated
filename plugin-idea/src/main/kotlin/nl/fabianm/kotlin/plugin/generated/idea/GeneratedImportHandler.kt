@@ -56,8 +56,8 @@ internal object GeneratedImportHandler {
         var isEnabled = false
         val oldPluginClasspaths = (commonArguments.pluginClasspaths ?: emptyArray()).filterTo(mutableListOf()) {
             val match = regex.matches(it) && validateJar(it, implementationTitle)
-            logger.info("$it [match=$match]")
             if (match) {
+                logger.info("$it [match=$match]")
                 isEnabled = true
             }
             !match
