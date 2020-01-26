@@ -18,7 +18,6 @@ package nl.fabianm.kotlin.plugin.generated.compiler
 
 import com.intellij.mock.MockProject
 import com.intellij.openapi.extensions.Extensions
-import com.intellij.openapi.extensions.LoadingOrder
 import com.intellij.openapi.extensions.impl.ExtensionPointImpl
 import com.intellij.openapi.project.Project
 import nl.fabianm.kotlin.plugin.generated.compiler.GeneratedConfigurationKeys.ANNOTATION
@@ -109,5 +108,5 @@ fun <T> ProjectExtensionDescriptor<T>.registerExtensionAsFirst(project: Project,
     Extensions.getArea(project)
         .getExtensionPoint(extensionPointName)
         .let { it as ExtensionPointImpl }
-        .registerExtension(extension, LoadingOrder.LAST) {}
+        .registerExtension(extension, {})
 }

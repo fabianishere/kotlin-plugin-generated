@@ -15,14 +15,14 @@
  */
 
 plugins {
-    kotlin("jvm") version "1.3.50" apply false
+    kotlin("jvm") version "1.3.60" apply false
     id("org.jlleitschuh.gradle.ktlint") version "8.2.0" apply false
     id("com.github.johnrengelman.shadow") version "5.0.0" apply false
 }
 
 allprojects {
     group = "nl.fabianm.kotlin.plugin.generated"
-    version = "1.4.0"
+    version = "1.5.0"
 
     extra["junitJupiterVersion"] = "5.4.2"
     extra["junitPlatformVersion"] = "1.4.2"
