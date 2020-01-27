@@ -50,7 +50,7 @@ class GeneratedKotlinGradleSubplugin : KotlinGradleSubplugin<AbstractCompile> {
     companion object {
         private const val GENERATED_ARTIFACT_NAME = "plugin-gradle"
         private const val GENERATED_GROUP_ID = "nl.fabianm.kotlin.plugin.generated"
-        private const val GENERATED_VERSION = "1.4.0"
+        private const val GENERATED_VERSION = "1.5.0"
         private const val GENERATED_COMPILER_PLUGIN_ID = "nl.fabianm.kotlin.plugin.generated"
         private val ANNOTATION_ARG_NAME = "annotation"
         private val VISIBLE_ARG_NAME = "visible"
