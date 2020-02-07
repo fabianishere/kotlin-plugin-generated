@@ -52,6 +52,6 @@ tasks.jar {
 /* IntelliJ */
 intellij {
     pluginName = "kotlin-plugin-generated"
-    version = "2019.2"
-    setPlugins("gradle", "org.jetbrains.kotlin:1.3.50-release-IJ2019.2-1")
+    version = "2019.3"
+    setPlugins("gradle", "org.jetbrains.kotlin:1.3.61-release-IJ2019.3-1")
 }
